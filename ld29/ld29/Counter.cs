@@ -7,6 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ld29
 {
+    public enum CounterType
+    {
+        Happy,
+        Sad
+    }
+
     class Counter
     {
         public Vector2 Position { get; set; }
@@ -17,6 +23,8 @@ namespace ld29
         public string Text { get; set; }
         public Color ColorFrom { get; set; }
         public Color ColorTo { get; set; }
+
+        public CounterType Type { get; set; }
 
         float initialDuration;
 
@@ -42,17 +50,19 @@ namespace ld29
             Amplitude = Util.Range(50, 400);
             Period = Util.Range(20, 50);
 
-            if (Util.Chance(0.8))
+            if (Util.ShouldSpawnHappyThought())
             {
                 ColorFrom = Color.Red;
-                ColorTo = Color.Gray;
-                Text = "I'm so happy";
+                ColorTo = Color.Red;
+                Text = "Happy happy happy";
+                Type = CounterType.Happy;
             }
             else
             {
                 ColorFrom = Color.Green;
                 ColorTo = Color.Honeydew;
                 Text = "saaaaad...";
+                Type = CounterType.Sad;
             }
         }
 

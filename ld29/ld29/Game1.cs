@@ -32,8 +32,8 @@ namespace ld29
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferWidth = 640 * 2;
-            graphics.PreferredBackBufferHeight = 360 * 2;
+            //graphics.PreferredBackBufferWidth = 640 * 2;
+            //graphics.PreferredBackBufferHeight = 360 * 2;
 
             IsMouseVisible = true;
         }
@@ -97,6 +97,8 @@ namespace ld29
             oldMouseState = mouseState;
             mouseState = Mouse.GetState();
 
+            Util.Update(elapsed);
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kbState.IsKeyDown(Keys.Escape))
                 this.Exit();
@@ -113,6 +115,7 @@ namespace ld29
                 {
                     if (c.Rectangle.Contains(mouseClick))
                     {
+                        Util.Clicked(c.Type);
                         c.Duration = 0;
                         break;
                     }
@@ -121,7 +124,7 @@ namespace ld29
 
             if (Util.Chance(0.02))
             {
-                counters.Add(new Counter(new Vector2(Util.Random.Next(20, 1200), 650), 5));
+                counters.Add(new Counter(new Vector2(Util.Random.Next(100, 700), 600), 5));
             }
 
             for (int i = 0; i < counters.Count; i++)
@@ -146,6 +149,8 @@ namespace ld29
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+
+            spriteBatch.DrawString(Util.Font, Util.Feelings.ToString(), Vector2.Zero, Color.White);
 
             for (int i = 0; i < counters.Count; i++)
             {
